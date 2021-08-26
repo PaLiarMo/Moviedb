@@ -1,7 +1,6 @@
 package com.paliarmo.moviedb.adapter
 
 
-import android.renderscript.ScriptGroup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class BasicAdapter<T : BasicData>(private val onClick: (T) -> Unit): ListAdapter
     }
 
     override fun onBindViewHolder(holder: BasicViewHolder<T>, position: Int) {
-        var item = getItem(position)
+        val item = getItem(position)
         holder.bind(item)
     }
 }
