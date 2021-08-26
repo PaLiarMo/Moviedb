@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Moviedb</string>
-    <string name="loading_view_title">Загружается список пожалуйста подождите...</string>
+    <string name="loading_view_title">Загружается список пожалуйста подождите…</string>
+    <string name="update_button_text">Обновить</string>
 </resources>

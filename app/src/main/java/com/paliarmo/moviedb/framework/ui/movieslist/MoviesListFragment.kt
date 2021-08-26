@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.paliarmo.moviedb.R
 import com.paliarmo.moviedb.ScreenState
 import com.paliarmo.moviedb.adapter.BasicAdapter
 import com.paliarmo.moviedb.core.BasicData
 import com.paliarmo.moviedb.databinding.MoviesListFragmentBinding
 import com.paliarmo.moviedb.framework.model.entities.EMovie
 import com.paliarmo.moviedb.framework.model.responses.RMoviesList
+import com.paliarmo.moviedb.framework.ui.moviedetail.MoviesDetailFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesListFragment  : Fragment() {
@@ -61,10 +63,7 @@ class MoviesListFragment  : Fragment() {
                 mRecycler.visibility = View.VISIBLE
                 emptyView.visibility = View.GONE
                 loadingView.visibility = View.GONE
-                val moviesResponse = state.data
-                moviesResponse?.let {
-                    setData(it)
-                }
+                setData(state.data)
             }
             is ScreenState.Loading -> {
                 mRecycler.visibility = View.GONE
@@ -81,12 +80,16 @@ class MoviesListFragment  : Fragment() {
     }
 
     private fun setData(movies: RMoviesList) = with(binding) {
-        var mutable = movies.data as MutableList<BasicData>
+        val mutable = movies.data as MutableList<BasicData>
         adapter.submitList(mutable)
         adapter.notifyDataSetChanged()
     }
 
     private fun adapterOnClick(item: EMovie) {
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.container, MoviesDetailFragment.newInstance(item))?.addToBackStack("MoviesDetailFragment")
+            ?.commitAllowingStateLoss()
 
     }
 
